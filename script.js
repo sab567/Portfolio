@@ -1,10 +1,4 @@
-/* ══════════════════════════════════════════════════════════════════════════════
-   LA GRANDE DAME SABETHA POOTHAPILLAI      
-   ══════════════════════════════════════════════════════════════════════════════
-   
-   Hey ! nous nous retrouvons ! voici donc les commentaires pour t'aider à comprendre ce code
-   
-   Ce fichier contient TOUTE la logique interactive du site :
+    Ce fichier contient TOUTE la logique interactive du site :
    - La barre de navigation qui change au scroll
    - Le menu hamburger pour mobile
    - Les animations d'apparition au scroll (reveal)
@@ -315,28 +309,34 @@ document.addEventListener('DOMContentLoaded', function () {
      ───────────────────────────────────────────────────────────────────────── */
   var contactForm = document.getElementById('contactForm');
 
-  contactForm.addEventListener('submit', function (e) {
-    e.preventDefault();
+if (contactForm) {
+  contactForm.addEventListener('submit', function () {
 
     var btn = contactForm.querySelector('button[type="submit"]');
-    var originalText = btn.innerHTML;  // On garde le texte du bouton pour le remettre après
+    var originalText = btn.innerHTML;
 
-    // Feedback visuel : on change le bouton en vert avec un check ✓
-    btn.innerHTML = '<span>Message envoyé ✓</span>';
-    btn.style.background = 'linear-gradient(135deg, #34d399 0%, #059669 100%)';
-    btn.style.boxShadow = '0 4px 15px rgba(52, 211, 153, 0.35)';
-    btn.disabled = true;  // On le désactive pour éviter les double-clics
+    // ⏳ Pendant l’envoi
+    btn.innerHTML = '<span>Envoi en cours...</span>';
+    btn.disabled = true;
 
-    // Après 3 secondes → on remet tout comme avant
+    // ✅ Feedback visuel après un petit délai (optionnel mais plus réaliste)
+    setTimeout(function () {
+      btn.innerHTML = '<span>Message envoyé ✓</span>';
+      btn.style.background = 'linear-gradient(135deg, #34d399 0%, #059669 100%)';
+      btn.style.boxShadow = '0 4px 15px rgba(52, 211, 153, 0.35)';
+    }, 800);
+
+    // 🔄 Reset après 3 secondes
     setTimeout(function () {
       btn.innerHTML = originalText;
       btn.style.background = '';
       btn.style.boxShadow = '';
       btn.disabled = false;
-      contactForm.reset();  // On vide tous les champs
+      contactForm.reset();
     }, 3000);
-  });
 
+  });
+}
 
   /* ─────────────────────────────────────────────────────────────────────────
      🌀 MOUVEMENT DES FORMES DANS LE HERO
